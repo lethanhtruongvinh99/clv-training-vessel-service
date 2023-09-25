@@ -1,8 +1,8 @@
-import { PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import { CreateDateColumn, PrimaryColumn } from 'typeorm';
 
 export class BaseEntity {
-  @PrimaryGeneratedColumn()
-  id?: number;
+  @PrimaryColumn({ unique: true })
+  vessel_code: string;
 
   @CreateDateColumn({ nullable: true })
   created_at?: Date;

@@ -9,12 +9,20 @@ export class VesselsController {
 
   @MessagePattern({ role: 'vessel', cmd: 'get-all' })
   getAllVessels(@Payload() payload: { queries: any }) {
-    return this.vesselsService.getAllVessels(payload.queries);
+    console.log('!@#');
+    const { queries } = payload;
+    const conditions = {};
+    Object.keys(queries).forEach((key) => {
+      if (queries[key]) {
+        conditions[key] = queries[key];
+      }
+    });
+    return this.vesselsService.getAllVessels(conditions);
   }
 
   @MessagePattern({ role: 'vessel', cmd: 'get-one' })
-  getOneVessel(@Payload() payload: { id: number }) {
-    return this.vesselsService.getOneVessel(payload.id);
+  getOneVessel(@Payload() payload: { vessel_code: string }) {
+    return this.vesselsService.getOneVessel(payload.vessel_code);
   }
 
   @MessagePattern({ role: 'vessel', cmd: 'create' })
@@ -23,7 +31,12 @@ export class VesselsController {
   }
 
   @MessagePattern({ role: 'vessel', cmd: 'update' })
-  updateVessel(@Payload() payload: { id: number; vessel: CreateVesselDto }) {
-    return this.vesselsService.updateVessel(payload.id, payload.vessel);
+  updateVessel(
+    @Payload() payload: { vessel_code: string; vessel: CreateVesselDto },
+  ) {
+    return this.vesselsService.updateVessel(
+      payload.vessel_code,
+      payload.vessel,
+    );
   }
 }

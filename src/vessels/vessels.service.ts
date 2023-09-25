@@ -15,8 +15,8 @@ export class VesselsService {
     return this.vesselsRepository.find({ where: queries });
   }
 
-  getOneVessel(id: number) {
-    return this.vesselsRepository.findOne({ where: { id } });
+  getOneVessel(vessel_code: string) {
+    return this.vesselsRepository.findOne({ where: { vessel_code } });
   }
 
   createVessel(vessel: CreateVesselDto) {
@@ -24,9 +24,9 @@ export class VesselsService {
     return this.vesselsRepository.save(newVessel);
   }
 
-  async updateVessel(id: number, vessel: CreateVesselDto) {
+  async updateVessel(vessel_code: string, vessel: CreateVesselDto) {
     const targetVessel = await this.vesselsRepository.findOne({
-      where: { id },
+      where: { vessel_code },
     });
     if (targetVessel) {
       Object.assign(targetVessel, vessel);
